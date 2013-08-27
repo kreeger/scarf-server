@@ -1,0 +1,11 @@
+development:
+  adapter: postgres
+  database: scarf_dev
+
+test:
+  adapter: postgres
+  database: scarf_test
+
+production:
+  adapter: postgres
+  database: scarf

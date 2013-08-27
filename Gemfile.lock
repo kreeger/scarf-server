@@ -156,7 +156,7 @@ DEPENDENCIES
   database_cleaner (~> 1.1.1)
   debugger
   factory_girl_rails (~> 4.2.1)
-  foreigner
+  foreigner (~> 1.4.2)
   jquery-rails
   pg
   puma (~> 2.5.1)

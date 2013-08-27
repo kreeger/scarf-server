@@ -1,11 +1,17 @@
 development:
-  adapter: postgres
+  adapter: postgresql
+  username: scarf
+  password: scarf
   database: scarf_dev
 
 test:
-  adapter: postgres
+  adapter: postgresql
+  username: scarf
+  password: scarf
   database: scarf_test
 
 production:
-  adapter: postgres
+  adapter: postgresql
+  username: scarf
+  password: scarf
   database: scarf

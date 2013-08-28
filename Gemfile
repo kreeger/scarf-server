@@ -24,7 +24,7 @@ end
 
 group :test do
   gem 'vcr', '~> 2.4.0'
-  gem 'webmock', '~> 1.9.0'
+  gem 'typhoeus', '~> 0.6.5'
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'database_cleaner', '~> 1.1.1'
 end

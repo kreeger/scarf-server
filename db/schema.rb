@@ -11,24 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130827232241) do
+ActiveRecord::Schema.define(version: 20130830015055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "articles", force: true do |t|
+    t.integer  "fetch_id",    null: false
+    t.string   "document_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "feeds", force: true do |t|
-    t.string   "name"
-    t.string   "uri"
-    t.string   "mime_type"
+    t.string   "name",       null: false
+    t.string   "uri",        null: false
+    t.string   "mime_type",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "fetches", force: true do |t|
-    t.integer  "feed_id"
-    t.string   "document_id"
-    t.datetime "created_at"
+    t.integer  "feed_id",                     null: false
+    t.integer  "response_code", default: 200, null: false
+    t.datetime "fetched_at",                  null: false
   end
+
+  add_foreign_key "articles", "fetches", :name => "articles_fetch_id_fk"
 
   add_foreign_key "fetches", "feeds", :name => "fetches_feed_id_fk"
 

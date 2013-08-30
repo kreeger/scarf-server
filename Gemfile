@@ -17,6 +17,7 @@ gem 'quiet_assets', github: 'evrone/quiet_assets'
 # gem 'debugger', group: [:development, :test]
 gem 'slim-rails', '~> 1.1.1'
 gem 'typhoeus', '~> 0.5.4'
+gem 'nokogiri', '~> 1.6.0'
 
 group :development, :test do
   gem 'debugger'

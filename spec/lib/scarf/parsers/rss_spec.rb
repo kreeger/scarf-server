@@ -49,5 +49,29 @@ describe Scarf::Parsers::RSS do
       expect(wired.language).to eq('en')
       expect(wired.copyright).to eq('2011 Conde Nast Digital. All rights reserved.')
     end
+
+    describe :items do
+      it 'will not be empty' do
+        expect(ars.items).to be_a(Array)
+        expect(wired.items).to be_a(Array)
+        expect(ars.items).to_not be_empty
+        expect(wired.items).to_not be_empty
+      end
+
+      describe :an_item do
+        let(:ars_item) { ars.items.first }
+        let(:wired_item) { wired.items.first }
+
+        it 'has a title, link, and description' do
+          expect(ars_item[:title]).to eq("Ars does Soylent, Day 3: Moderation leads to actual for-real enjoyment")
+          expect(wired_item[:title]).to eq("If Volvo Made a Camaro, It'd Look Like This")
+
+          %w(link description pub_date guid).map(&:to_sym).each do |key|
+            expect(ars_item[key]).to_not be_empty
+            expect(wired_item[key]).to_not be_empty
+          end
+        end
+      end
+    end
   end
 end

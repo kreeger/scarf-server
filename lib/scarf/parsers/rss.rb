@@ -1,4 +1,6 @@
 module Scarf::Parsers
+  # Handles parsing RSS in the SAX school-of-thought by being passed to Nokogiri
+  # during its parsing process. Tracks RSS-specific tags and items and things.
   class RSS < Nokogiri::XML::SAX::Document
     attr_reader :result, :publish_date, :last_build_date
 

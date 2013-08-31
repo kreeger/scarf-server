@@ -1,6 +1,6 @@
 module Scarf::Parsers
   class RSS < Nokogiri::XML::SAX::Document
-    attr_reader :result
+    attr_reader :result, :publish_date, :last_build_date
 
     def initialize
       @result = {
@@ -8,7 +8,10 @@ module Scarf::Parsers
         link: nil,
         description: nil,
         language: nil,
-        pubDate: nil,
+        pub_date: nil,
+        last_build_date: nil,
+        ttl: nil,
+        copyright: nil,
         items: [],
       }
     end
@@ -18,7 +21,10 @@ module Scarf::Parsers
     end
 
     def end_document
-      # This space intentionally left blank.
+      # Dates *should* conform to RFC 822. If I encounter more formats, I'll
+      # split this out into a more robust parsing method.
+      @publish_date = DateTime.parse(@result[:pub_date])
+      @last_build_date = DateTime.parse(@result[:last_build_date])
     end
 
     def start_element(name, attributes=[])
@@ -48,7 +54,8 @@ module Scarf::Parsers
       when 'item'
         @result[:items] << @item
       else
-        fixed_name = name.gsub(':', '_').to_sym
+        # I wish to thank ActiveSupport for its support
+        fixed_name = name.underscore.to_sym
         if @result.keys.include?(fixed_name) && @result[fixed_name].nil?
           @result[fixed_name] = content
         elsif @item

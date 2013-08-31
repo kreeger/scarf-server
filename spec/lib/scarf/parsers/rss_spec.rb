@@ -27,6 +27,27 @@ describe Scarf::Parsers::RSS do
       expect(ars.title).to eq('Ars Technica')
       expect(wired.title).to eq('Wired Top Stories')
     end
-  end
 
+    it 'has a link' do
+      expect(ars.link).to eq('http://arstechnica.com')
+      expect(wired.link).to eq('http://www.wired.com')
+    end
+
+    it 'has a description' do
+      expect(ars.description).to eq('The Art of Technology')
+      expect(wired.description).to eq('Top Stories')
+    end
+
+    it 'has a publish date' do
+      expect(ars.publish_date).to be_a(DateTime)
+      expect(wired.publish_date).to be_a(DateTime)
+      puts ars.publish_date
+    end
+
+    it 'has other less-important attributes' do
+      expect(ars.language).to eq('en-US')
+      expect(wired.language).to eq('en')
+      expect(wired.copyright).to eq('2011 Conde Nast Digital. All rights reserved.')
+    end
+  end
 end

@@ -48,7 +48,7 @@ module Scarf::Parsers
 
     def characters(string)
       @element[:characters] ||= String.new
-      @element[:characters] << string
+      @element[:characters] << string.gsub(/\s{2,}/, ' ')
     end
 
     def end_element(name)

@@ -25,8 +25,13 @@ module Scarf::Parsers
     def end_document
       # Dates *should* conform to RFC 822. If I encounter more formats, I'll
       # split this out into a more robust parsing method.
-      @publish_date = DateTime.parse(@result[:pub_date])
-      @last_build_date = DateTime.parse(@result[:last_build_date])
+      if @result[:pub_date]
+        @publish_date = DateTime.parse(@result[:pub_date])
+      end
+
+      if @result[:last_build_date]
+        @last_build_date = DateTime.parse(@result[:last_build_date])
+      end
     end
 
     def start_element(name, attributes=[])

@@ -2,33 +2,25 @@ require 'spec_helper'
 require 'scarf'
 
 describe Scarf::Parser do
-  def rss(name)
-    IO.read(Rails.root.join('spec', 'fixtures', 'rss', name))
-  end
-
-  let(:fixtures) do
-    Dir[Rails.root.join('spec', 'fixtures', 'rss', '*.*')]
-  end
-
-  let(:parsers) do
-    fixtures.map { |f| Scarf::Parser.new(rss(f)) }
+  let(:parser) do
+    Scarf::Parser.new("<xml></xml>")
   end
 
   describe :initialize do
     it 'takes a data string' do
-      parsers.each do |parser|
-        expect(parser.data).to_not be_empty
-      end
+      expect(parser.data).to_not be_empty
     end
   end
 
   describe :parse do
+    it 'calls the appropriate method' do
+      expect(parser).to receive(:parse_rss)
+      result = parser.parse
+    end
+
     it 'returns a hash' do
-      parsers.each do |parser|
-        result = parser.parse
-        expect(result).to_not be_empty
-        expect(result).to be_a(Hash)
-      end
+      expect(parser.parse).to be_a(Hash)
+      expect(parser.parse).to_not be_nil
     end
   end
 end

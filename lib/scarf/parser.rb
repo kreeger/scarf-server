@@ -1,6 +1,8 @@
 require 'nokogiri'
+Dir[File.join(File.dirname(__FILE__), 'parsers', '*.rb')].each { |f| require f }
 
 module Scarf
+
   # Handles all parsing logic. Delegates parsing functionality to various
   # methods.
   class Parser
@@ -24,11 +26,17 @@ module Scarf
     #
     # @return [Hash] Returns an feed hash.
     def parse_rss
-      noko = Nokogiri::XML.parse(@data)
-      debugger
+      parser = Parsers::RSS.new
+      noko_sax = Nokogiri::XML::SAX::Parser.new(parser)
+      noko_sax.parse(@data)
+      parser.result
       {
-        title: noko.css('channel > title').text,
+        title: parser.title,
       }
     end
   end
+
+  # Inner module that contains all of the parsers in use by Scarf. See the
+  # parsers directory for class definitions.
+  module Parsers; end
 end

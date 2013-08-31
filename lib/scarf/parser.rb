@@ -30,6 +30,7 @@ module Scarf
       noko_sax = Nokogiri::XML::SAX::Parser.new(parser)
       noko_sax.parse(@data)
       parser.result
+      # TODO: Turn this into a standardized model format across all format types
       {
         title: parser.title,
       }

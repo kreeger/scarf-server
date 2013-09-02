@@ -2,19 +2,20 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.0.0'
 gem 'pg'
+gem 'foreigner', '~> 1.4.2'
+
+gem 'devise', '~> 3.0.3'
+gem 'puma', '~> 2.5.1'
+gem 'typhoeus', '~> 0.5.4'
+gem 'nokogiri', '~> 1.6.0'
+
+gem 'slim-rails', '~> 1.1.1'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
-gem 'foreigner', '~> 1.4.2'
 gem 'turbolinks'
-gem 'puma', '~> 2.5.1'
 gem 'quiet_assets', github: 'evrone/quiet_assets'
-
-gem 'slim-rails', '~> 1.1.1'
-gem 'typhoeus', '~> 0.5.4'
-gem 'nokogiri', '~> 1.6.0'
-gem 'chronic'
 
 # gem 'bcrypt-ruby', '~> 3.0.0'
 # gem 'unicorn'

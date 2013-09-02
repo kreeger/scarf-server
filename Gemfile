@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.0.0'
-gem 'pg'
+gem 'pg', '~> 0.16.0'
 gem 'foreigner', '~> 1.4.2'
 
 gem 'devise', '~> 3.0.3'
@@ -13,8 +13,8 @@ gem 'slim-rails', '~> 1.1.1'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
-gem 'jquery-rails'
-gem 'turbolinks'
+gem 'jquery-rails', '~> 3.0.4'
+gem 'turbolinks', '~> 1.3.0'
 gem 'quiet_assets', github: 'evrone/quiet_assets'
 
 # gem 'bcrypt-ruby', '~> 3.0.0'

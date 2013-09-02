@@ -24,16 +24,12 @@ module Scarf
 
     # Handles RSS-specific parsing. TODO: after exploring, use SAX-based parsing
     #
-    # @return [Hash] Returns an feed hash.
+    # @return [Scarf::Feed] Returns an feed hash.
     def parse_rss
       parser = Parsers::RSS.new
       noko_sax = Nokogiri::XML::SAX::Parser.new(parser)
       noko_sax.parse(@data)
-      parser.result
-      # TODO: Turn this into a standardized model format across all format types
-      {
-        title: parser.title,
-      }
+      parser.feed
     end
   end
 

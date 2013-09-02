@@ -1,8 +1,11 @@
+require 'scarf/feed'
+require 'scarf/article'
+
 module Scarf::Parsers
   # Handles parsing RSS in the SAX school-of-thought by being passed to Nokogiri
   # during its parsing process. Tracks RSS-specific tags and items and things.
   class RSS < Nokogiri::XML::SAX::Document
-    attr_reader :result, :publish_date, :last_build_date
+    attr_reader :feed
 
     def initialize
       @result = {
@@ -23,14 +26,16 @@ module Scarf::Parsers
     end
 
     def end_document
+      @feed = Scarf::Feed.new(@result)
+
       # Dates *should* conform to RFC 822. If I encounter more formats, I'll
       # split this out into a more robust parsing method.
       if @result[:pub_date]
-        @publish_date = DateTime.parse(@result[:pub_date])
+        @feed.publish_date = DateTime.parse(@result[:pub_date])
       end
 
       if @result[:last_build_date]
-        @last_build_date = DateTime.parse(@result[:last_build_date])
+        @feed.last_build_date = DateTime.parse(@result[:last_build_date])
       end
     end
 
@@ -54,32 +59,27 @@ module Scarf::Parsers
     def end_element(name)
       content = @element[:characters] || @element[:cdata]
       content = content.strip if content
-      case name
-      when 'category'
-        @item[name.to_sym] ||= []
-        @item[name.to_sym] << content
-      when 'item'
-        @result[:items] << @item
+      # I wish to thank ActiveSupport for its support
+      fixed_name = name.underscore.to_sym
+      case fixed_name
+      when :category
+        @item[fixed_name] ||= []
+        @item[fixed_name] << content
+      when :item
+        publish_date = @item[:pub_date]
+        if publish_date
+          publish_date = DateTime.parse(publish_date)
+          @item.delete(:pub_date)
+        end
+        article = Scarf::Article.new(@item)
+        article.publish_date = publish_date
+        @result[:items] << article
       else
-        # I wish to thank ActiveSupport for its support
-        fixed_name = name.underscore.to_sym
         if @result.keys.include?(fixed_name) && @result[fixed_name].nil?
           @result[fixed_name] = content
         elsif @item
           @item[fixed_name] = content
         end
-      end
-    end
-
-    def respond_to_missing?(name, include_private = false)
-      @result.keys.include?(name) || super
-    end
-
-    def method_missing(name, *args, &block)
-      if @result.keys.include?(name)
-        @result[name]
-      else
-        super
       end
     end
   end

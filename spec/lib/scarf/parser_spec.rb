@@ -19,7 +19,7 @@ describe Scarf::Parser do
     end
 
     it 'returns a hash' do
-      expect(parser.parse).to be_a(Hash)
+      expect(parser.parse).to be_a(Scarf::Feed)
       expect(parser.parse).to_not be_nil
     end
   end

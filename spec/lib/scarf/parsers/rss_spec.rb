@@ -14,13 +14,13 @@ describe Scarf::Parsers::RSS do
     parser
   end
 
-  let(:ars) { sax_parse('ars.rss') }
-  let(:wired) { sax_parse('wired.rss') }
+  let(:ars) { sax_parse('ars.rss').feed }
+  let(:wired) { sax_parse('wired.rss').feed }
 
   context :after_parsing do
-    it 'contains the result as a hash' do
-      expect(ars.result).to be_a(Hash)
-      expect(wired.result).to be_a(Hash)
+    it 'contains the result as a Feed object' do
+      expect(ars).to be_a(Scarf::Feed)
+      expect(wired).to be_a(Scarf::Feed)
     end
 
     it 'has a title' do
@@ -63,12 +63,12 @@ describe Scarf::Parsers::RSS do
         let(:wired_item) { wired.items.first }
 
         it 'has a title, link, and description' do
-          expect(ars_item[:title]).to eq("Ars does Soylent, Day 3: Moderation leads to actual for-real enjoyment")
-          expect(wired_item[:title]).to eq("If Volvo Made a Camaro, It'd Look Like This")
+          expect(ars_item.title).to eq("Ars does Soylent, Day 3: Moderation leads to actual for-real enjoyment")
+          expect(wired_item.title).to eq("If Volvo Made a Camaro, It'd Look Like This")
 
-          %w(link description pub_date guid).map(&:to_sym).each do |key|
-            expect(ars_item[key]).to_not be_empty
-            expect(wired_item[key]).to_not be_empty
+          %w(link description publish_date guid).map(&:to_sym).each do |key|
+            expect(ars_item.send(key)).to_not be_nil
+            expect(wired_item.send(key)).to_not be_nil
           end
         end
       end

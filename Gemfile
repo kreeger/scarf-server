@@ -10,6 +10,8 @@ gem 'typhoeus', '~> 0.5.4'
 gem 'nokogiri', '~> 1.6.0'
 
 gem 'slim-rails', '~> 1.1.1'
+gem 'ember-rails'
+gem 'ember-source', '1.0.0'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'

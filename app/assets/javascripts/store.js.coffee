@@ -1,6 +1,0 @@
-# http://emberjs.com/guides/models/defining-a-store/
-
-Scarf.Store = DS.Store.extend
-  revision: 11
-  adapter: DS.RESTAdapter.create()
-

@@ -13,7 +13,6 @@ Bundler.require(:default, Rails.env)
 
 module Scarf
   class Application < Rails::Application
-    config.ember.variant = Rails.env.to_sym
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
